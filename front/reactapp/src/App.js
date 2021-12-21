@@ -1,13 +1,13 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { Restaurants, Foods, Orders } from './containers/index';
+import { Votes } from './containers/index';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Restaurants />} />
+        <Route path='/' element={<Votes />} />
       </Routes>
     </Router>
   );
