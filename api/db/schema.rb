@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_08_001908) do
+ActiveRecord::Schema.define(version: 2021_12_22_050943) do
+
+  create_table "fighters", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.bigint "count", default: 0
+    t.bigint "fighter_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "foods", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "restaurant_id", null: false
