@@ -5,20 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-3.times do |n|
-  restaurant = Restaurant.new(
-    name: "うまいレストラン_#{n}",
-    fee: 100,
-    time_required: 10,
-  )
 
-  12.times do |m|
-    restaurant.foods.build(
-      name: "うますぎる商品_#{m}",
-      price: 500,
-      description: "フード_#{m}の説明文です。"
+
+  ["朝倉海","井上直樹","扇久保博正","瀧澤謙太"].each do |fighter_name|
+    fighter = Fighter.new(
+      name: fighter_name,
+      fighter_number: rand(999999)
     )
+    fighter.save!
   end
-
-  restaurant.save!
-end
