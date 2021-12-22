@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resource :fighters, only: %i[index create]
+  get  '/fighters', to: 'fighters#index'
+
   namespace :api do
     namespace :v1 do
       resources :restaurants do
@@ -9,4 +12,6 @@ Rails.application.routes.draw do
       resources :orders, only: %i[create]
     end
   end
+
+
 end
