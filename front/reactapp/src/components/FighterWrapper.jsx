@@ -35,7 +35,11 @@ const ButtonWrapper = styled.div`
   text-align: center;
 `;
 
-export const FighterWrapper = ({ fighter, imageUrl }) => {
+export const FighterWrapper = ({
+  fighter,
+  imageUrl,
+  onClickFighterWrapper,
+}) => {
   return (
     <Fragment>
       <Name>{fighter.name}</Name>
@@ -49,6 +53,7 @@ export const FighterWrapper = ({ fighter, imageUrl }) => {
             size='large'
             color='secondary'
             sx={{ mt: 1, mx: 'auto' }}
+            onClick={() => onClickFighterWrapper(fighter)}
           >
             {fighter.name}に投票する
           </Button>

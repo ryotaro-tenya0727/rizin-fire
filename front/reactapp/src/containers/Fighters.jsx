@@ -21,6 +21,9 @@ import { fetchfighters } from '../apis/fighters';
 //格闘家の一つ一つのカード
 import { FighterWrapper } from './../components/FighterWrapper';
 
+//投票した時のダイアログ
+import { FighterVoteDialog } from './../components/FighterVoteDialog';
+
 //images
 import AsakuraImage from './../images/asakura.png';
 import InoueImage from '../images/inoue.png';
@@ -28,6 +31,12 @@ import OgikuboImage from '../images/ogikubo.png';
 import TakizawaImage from '../images/takizawa.png';
 
 const fightersImages = [AsakuraImage, InoueImage, OgikuboImage, TakizawaImage];
+
+//モーダルの閉開の状態を表す。
+const initialState = {
+  isOpenOrderDialog: false,
+  selectedFighter: null,
+};
 
 //styled-components
 const HeaderWrapper = styled.div`
@@ -64,6 +73,7 @@ const Fighters = () => {
     fightersReducer,
     fightersInitialState
   );
+  const [state, setState] = useState(initialState);
   useEffect(() => {
     dispatch({ type: fightersActionTypes.FETCHING });
 
@@ -108,12 +118,30 @@ const Fighters = () => {
               <ItemWrapper key={fighter.id}>
                 <FighterWrapper
                   fighter={fighter}
+                  onClickFighterWrapper={(fighter) => {
+                    setState({
+                      selectedFighter: fighter,
+                      isOpenOrderDialog: true,
+                    });
+                  }}
                   imageUrl={fightersImages[index]}
                 ></FighterWrapper>
               </ItemWrapper>
             ))
           )}
         </FightersList>
+        {state.isOpenOrderDialog && (
+          <FighterVoteDialog
+            isOpen={state.isOpenOrderDialog}
+            fighter={state.selectedFighter}
+            onClose={() =>
+              setState({
+                isOpenOrderDialog: false,
+                selectedFighter: null,
+              })
+            }
+          />
+        )}
       </FightersWrapper>
     </Fragment>
   );
