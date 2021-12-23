@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { REQUEST_STATE } from '../constant/constants';
 
+import { ResultButton } from './../Button/ResultButton';
+
 //mui(icon以外)
 import Skeleton from '@mui/material/Skeleton';
 
@@ -83,6 +85,7 @@ const Fighters = () => {
         <p>
           RIZINバンタム級トーナメント<br></br>優勝予想グランプリ
         </p>
+        <ResultButton></ResultButton>
       </HeaderWrapper>
       <FightersWrapper>
         <FightersList>
