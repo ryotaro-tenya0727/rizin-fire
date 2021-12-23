@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useReducer, useState } from 'react';
-import { Link } from 'react-router-dom';
-// constants
+import styled from 'styled-components';
+
 import { REQUEST_STATE } from '../constant/constants';
 
 // reducers
@@ -12,6 +12,11 @@ import {
 
 //apis
 import { fetchfighters } from '../apis/fighters';
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const Fighters = () => {
   const [fightersstate, dispatch] = useReducer(
@@ -35,6 +40,9 @@ const Fighters = () => {
 
   return (
     <Fragment>
+      <HeaderWrapper>
+        <h1>RIZINバンタム級トーナメント優勝予想グランプリ</h1>
+      </HeaderWrapper>
       {fightersstate.fightersList.map((item, index) => (
         <div key={index}>{item.name}</div>
       ))}
