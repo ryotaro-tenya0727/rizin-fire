@@ -16,6 +16,9 @@ import {
 //apis
 import { fetchfighters } from '../apis/fighters';
 
+//格闘家の一つ一つのカード
+import { FighterWrapper } from './../components/FighterWrapper';
+
 //styled-components
 const HeaderWrapper = styled.div`
   margin-top: 30px;
@@ -75,18 +78,26 @@ const Fighters = () => {
       </HeaderWrapper>
       <FightersWrapper>
         <FightersList>
-          <Fragment>
-            {[...Array(4).keys()].map((i) => (
-              <ItemWrapper key={i}>
-                <Skeleton
-                  key={i}
-                  variant='rectangular'
-                  width={200}
-                  height={200}
-                />
+          {fightersState.fetchState === REQUEST_STATE.LOADING ? (
+            <Fragment>
+              {[...Array(4).keys()].map((i) => (
+                <ItemWrapper key={i}>
+                  <Skeleton
+                    key={i}
+                    variant='rectangular'
+                    width={200}
+                    height={200}
+                  />
+                </ItemWrapper>
+              ))}
+            </Fragment>
+          ) : (
+            fightersState.fightersList.map((fighter) => (
+              <ItemWrapper key={fighter.id}>
+                <FighterWrapper></FighterWrapper>
               </ItemWrapper>
-            ))}
-          </Fragment>
+            ))
+          )}
         </FightersList>
       </FightersWrapper>
     </Fragment>
