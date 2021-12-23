@@ -3,6 +3,9 @@ import styled from 'styled-components';
 
 import { REQUEST_STATE } from '../constant/constants';
 
+//mui(icon以外)
+import Skeleton from '@mui/material/Skeleton';
+
 // reducers
 import {
   initialState as fightersInitialState,
@@ -13,13 +16,38 @@ import {
 //apis
 import { fetchfighters } from '../apis/fighters';
 
+//styled-components
 const HeaderWrapper = styled.div`
+  margin-top: 30px;
+  text-align: center;
+  font-size: 30px;
+  @media (max-width: 670px) {
+    font-size: 15px;
+  }
+`;
+
+const FightersWrapper = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 50px;
+`;
+
+const FightersList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 600px;
+  @media (max-width: 500px) {
+    justify-content: center;
+  }
+`;
+
+const ItemWrapper = styled.div`
+  margin: 30px 30px 80px 30px;
 `;
 
 const Fighters = () => {
-  const [fightersstate, dispatch] = useReducer(
+  const [fightersState, dispatch] = useReducer(
     fightersReducer,
     fightersInitialState
   );
@@ -41,11 +69,26 @@ const Fighters = () => {
   return (
     <Fragment>
       <HeaderWrapper>
-        <h1>RIZINバンタム級トーナメント優勝予想グランプリ</h1>
+        <p>
+          RIZINバンタム級トーナメント<br></br>優勝予想グランプリ
+        </p>
       </HeaderWrapper>
-      {fightersstate.fightersList.map((item, index) => (
-        <div key={index}>{item.name}</div>
-      ))}
+      <FightersWrapper>
+        <FightersList>
+          <Fragment>
+            {[...Array(4).keys()].map((i) => (
+              <ItemWrapper key={i}>
+                <Skeleton
+                  key={i}
+                  variant='rectangular'
+                  width={200}
+                  height={200}
+                />
+              </ItemWrapper>
+            ))}
+          </Fragment>
+        </FightersList>
+      </FightersWrapper>
     </Fragment>
   );
 };
