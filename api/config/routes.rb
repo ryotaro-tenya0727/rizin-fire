@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  resource :fighters, only: %i[index create]
-  get  '/fighters', to: 'fighters#index'
-
   namespace :api do
     namespace :v1 do
+      resource :fighters, only: %i[index create]
+      get  '/fighters', to: 'fighters#index'
       resources :restaurants do
         resources :foods, only: %i[index]
       end
