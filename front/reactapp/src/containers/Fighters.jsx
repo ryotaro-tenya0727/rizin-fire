@@ -31,7 +31,7 @@ const fightersImages = [AsakuraImage, InoueImage, OgikuboImage, TakizawaImage];
 const HeaderWrapper = styled.div`
   margin-top: 30px;
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
   @media (max-width: 670px) {
     font-size: 15px;
   }
@@ -40,7 +40,7 @@ const HeaderWrapper = styled.div`
 const FightersWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 10px;
 `;
 
 const FightersList = styled.div`
@@ -54,7 +54,7 @@ const FightersList = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  margin: 30px 30px 80px 30px;
+  margin: 30px 30px 2px 30px;
 `;
 
 const Fighters = () => {
@@ -90,6 +90,7 @@ const Fighters = () => {
             <Fragment>
               {[...Array(4).keys()].map((i) => (
                 <ItemWrapper key={i}>
+                  <Skeleton variant='text' height={25} />
                   <Skeleton
                     key={i}
                     variant='rectangular'
