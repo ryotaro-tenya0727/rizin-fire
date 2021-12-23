@@ -19,6 +19,14 @@ import { fetchfighters } from '../apis/fighters';
 //格闘家の一つ一つのカード
 import { FighterWrapper } from './../components/FighterWrapper';
 
+//images
+import AsakuraImage from './../images/asakura.png';
+import InoueImage from '../images/inoue.png';
+import OgikuboImage from '../images/ogikubo.png';
+import TakizawaImage from '../images/takizawa.png';
+
+const fightersImages = [AsakuraImage, InoueImage, OgikuboImage, TakizawaImage];
+
 //styled-components
 const HeaderWrapper = styled.div`
   margin-top: 30px;
@@ -92,9 +100,12 @@ const Fighters = () => {
               ))}
             </Fragment>
           ) : (
-            fightersState.fightersList.map((fighter) => (
+            fightersState.fightersList.map((fighter, index) => (
               <ItemWrapper key={fighter.id}>
-                <FighterWrapper></FighterWrapper>
+                <FighterWrapper
+                  fighter={fighter}
+                  imageUrl={fightersImages[index]}
+                ></FighterWrapper>
               </ItemWrapper>
             ))
           )}
