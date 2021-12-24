@@ -13,13 +13,7 @@ const theme = createTheme({
 export const ResultButton = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Button
-        variant='contained'
-        size='large'
-        color='secondary'
-        component={Link}
-        to='/results'
-      >
+      <Button variant='contained' size='large' color='secondary'>
         現在の投票結果を見る
       </Button>
     </ThemeProvider>

@@ -63,7 +63,6 @@ const Fighters = () => {
       };
 
   const [fightersState, setFightersState] = useState(fightersInitialState);
-  const [state, setState] = useState(initialState);
 
   const update = (index) => {
     setFightersState({
@@ -93,31 +92,12 @@ const Fighters = () => {
             <ItemWrapper key={index}>
               <FighterWrapper
                 fighter={fighter}
-                //この下の関数の引数はなんでも良い。
-                onClickFighterWrapper={(fighter) => {
-                  setState({
-                    selectedFighter: fighter,
-                    isOpenOrderDialog: true,
-                  });
-                }}
                 onClickVote={() => update(index)}
                 imageUrl={fightersImages[index]}
               ></FighterWrapper>
             </ItemWrapper>
           ))}
         </FightersList>
-        {state.isOpenOrderDialog && (
-          <FighterVoteDialog
-            isOpen={state.isOpenOrderDialog}
-            fighter={state.selectedFighter}
-            onClose={() =>
-              setState({
-                isOpenOrderDialog: false,
-                selectedFighter: null,
-              })
-            }
-          />
-        )}
       </FightersWrapper>
       <ResultWrapper>
         <p>現在の投票結果</p>

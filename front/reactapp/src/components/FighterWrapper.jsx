@@ -7,6 +7,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const Name = styled.div`
   text-align: center;
+  font-size: 28px;
+`;
+
+const Votes = styled.div`
+  text-align: center;
+  font-size: 24px;
 `;
 
 const Card = styled.div`
@@ -33,12 +39,13 @@ const ButtonWrapper = styled.div`
 export const FighterWrapper = ({
   fighter,
   imageUrl,
-  onClickFighterWrapper,
+
   onClickVote,
 }) => {
   return (
     <Fragment>
       <Name>{fighter.name}</Name>
+      <Votes>獲得票数{fighter.count}</Votes>
       <Card>
         <FighterImageNode src={imageUrl} />
       </Card>
@@ -50,7 +57,6 @@ export const FighterWrapper = ({
             color='secondary'
             sx={{ width: '100%', mt: 1 }}
             onClick={() => {
-              onClickFighterWrapper(fighter);
               onClickVote();
             }}
           >
