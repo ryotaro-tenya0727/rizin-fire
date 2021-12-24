@@ -5,11 +5,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //styled-components
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const Name = styled.div`
   text-align: center;
 `;
@@ -39,6 +34,7 @@ export const FighterWrapper = ({
   fighter,
   imageUrl,
   onClickFighterWrapper,
+  onClickVote,
 }) => {
   return (
     <Fragment>
@@ -52,8 +48,11 @@ export const FighterWrapper = ({
             variant='contained'
             size='large'
             color='secondary'
-            sx={{ mt: 1, mx: 'auto' }}
-            onClick={() => onClickFighterWrapper(fighter)}
+            sx={{ width: '100%', mt: 1 }}
+            onClick={() => {
+              onClickFighterWrapper(fighter);
+              onClickVote(fighter);
+            }}
           >
             {fighter.name}に投票する
           </Button>

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { REQUEST_STATE } from '../constant/constants';
 
 import { ResultButton } from './../Button/ResultButton';
+import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
 //mui(icon以外)
 import Skeleton from '@mui/material/Skeleton';
@@ -16,7 +17,7 @@ import {
 } from '../reducers/fighters';
 
 //apis
-import { fetchfighters } from '../apis/fighters';
+import { fetchfighters, postfighters } from '../apis/fighters';
 
 //格闘家の一つ一つのカード
 import { FighterWrapper } from './../components/FighterWrapper';
@@ -39,14 +40,7 @@ const initialState = {
 };
 
 //styled-components
-const HeaderWrapper = styled.div`
-  margin-top: 30px;
-  text-align: center;
-  font-size: 20px;
-  @media (max-width: 670px) {
-    font-size: 15px;
-  }
-`;
+const HeaderWrapper = styled(HeaderAndResult)``;
 
 const FightersWrapper = styled.div`
   display: flex;
@@ -68,18 +62,27 @@ const ItemWrapper = styled.div`
   margin: 30px 30px 2px 30px;
 `;
 
+const ResultWrapper = styled(HeaderAndResult)``;
+
 const Fighters = () => {
   const [fightersState, dispatch] = useReducer(
     fightersReducer,
     fightersInitialState
   );
   const [state, setState] = useState(initialState);
+
+  const voteFighter = (fighter) => {
+    postfighters({
+      fighter_number: fighter.fighter_number,
+    }).catch((e) => {
+      throw e;
+    });
+  };
   useEffect(() => {
     dispatch({ type: fightersActionTypes.FETCHING });
 
     (async () => {
       await fetchfighters().then((data) => {
-        console.log(data.fighters);
         dispatch({
           type: fightersActionTypes.FETCH_SUCCESS,
           payload: { fighters: data.fighters },
@@ -110,6 +113,7 @@ const Fighters = () => {
                     width={200}
                     height={200}
                   />
+                  <Skeleton variant='text' height={60} />
                 </ItemWrapper>
               ))}
             </Fragment>
@@ -124,6 +128,7 @@ const Fighters = () => {
                       isOpenOrderDialog: true,
                     });
                   }}
+                  onClickVote={(fighter) => voteFighter(fighter)}
                   imageUrl={fightersImages[index]}
                 ></FighterWrapper>
               </ItemWrapper>
@@ -143,6 +148,9 @@ const Fighters = () => {
           />
         )}
       </FightersWrapper>
+      <ResultWrapper>
+        <p>現在の投票結果</p>
+      </ResultWrapper>
     </Fragment>
   );
 };
