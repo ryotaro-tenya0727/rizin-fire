@@ -4,9 +4,6 @@ import styled from 'styled-components';
 import { ResultButton } from './../Button/ResultButton';
 import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
-// reducers
-import { initialState as fightersInitialState } from '../reducers/fighters';
-
 //格闘家の一つ一つのカード
 import { FighterWrapper } from './../components/FighterWrapper';
 
@@ -53,6 +50,18 @@ const ItemWrapper = styled.div`
 const ResultWrapper = styled(HeaderAndResult)``;
 
 const Fighters = () => {
+  const localState = localStorage.getItem('Fighters');
+  const fightersInitialState = localState
+    ? JSON.parse(localState)
+    : {
+        fightersList: [
+          { id: 1, name: '朝倉海', count: 0 },
+          { id: 2, name: '井上直樹', count: 0 },
+          { id: 3, name: '扇久保博正', count: 0 },
+          { id: 4, name: '瀧澤謙太', count: 0 },
+        ],
+      };
+
   const [fightersState, setFightersState] = useState(fightersInitialState);
   const [state, setState] = useState(initialState);
 
@@ -67,14 +76,8 @@ const Fighters = () => {
   };
 
   useEffect(() => {
-    (() => {
-      //ここに処理
-      const rankings = fightersState.fightersList.sort(function (a, b) {
-        return a.count > b.count ? -1 : 1;
-      });
-      console.log(rankings);
-    })();
-  }, []);
+    localStorage.setItem('Fighters', JSON.stringify(fightersState));
+  }, [fightersState]);
 
   return (
     <Fragment>
