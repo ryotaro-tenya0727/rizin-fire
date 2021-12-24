@@ -8,20 +8,25 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const Name = styled.div`
   text-align: center;
   font-size: 28px;
+  font-weight: bolder;
 `;
 
-const Votes = styled.div`
-  text-align: center;
+const VotesWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+`;
+
+const VotesString = styled.span`
+  font-size: 12px;
+  font-weight: bolder;
+`;
+
+export const Votes = styled.div`
   font-size: 24px;
-`;
-
-const Card = styled.div`
-  width: 200px;
-  height: 200px;
-`;
-
-const FighterImageNode = styled.img`
-  width: 200px;
+  font-family: 'Prata', serif;
+  text-align: center;
+  font-weight: bolder;
 `;
 
 const theme = createTheme({
@@ -32,30 +37,24 @@ const theme = createTheme({
   },
 });
 
-const ButtonWrapper = styled.div`
-  text-align: center;
-`;
+const ButtonWrapper = styled.div``;
 
-export const FighterWrapper = ({
-  fighter,
-  imageUrl,
-
-  onClickVote,
-}) => {
+export const FighterWrapper = ({ fighter, onClickVote }) => {
   return (
     <Fragment>
       <Name>{fighter.name}</Name>
-      <Votes>獲得票数{fighter.count}</Votes>
-      <Card>
-        <FighterImageNode src={imageUrl} />
-      </Card>
+      <VotesWrapper>
+        <Votes>{fighter.count.toLocaleString()}</Votes>
+        <VotesString>票</VotesString>
+      </VotesWrapper>
+
       <ThemeProvider theme={theme}>
         <ButtonWrapper>
           <Button
             variant='contained'
             size='large'
             color='secondary'
-            sx={{ width: '100%', mt: 1 }}
+            sx={{ width: '200px', mt: 1 }}
             onClick={() => {
               onClickVote();
             }}
