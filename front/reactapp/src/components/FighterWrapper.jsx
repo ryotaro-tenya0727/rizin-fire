@@ -51,7 +51,7 @@ export const FighterWrapper = ({
             sx={{ width: '100%', mt: 1 }}
             onClick={() => {
               onClickFighterWrapper(fighter);
-              onClickVote(fighter);
+              onClickVote();
             }}
           >
             {fighter.name}に投票する

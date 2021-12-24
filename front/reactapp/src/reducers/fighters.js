@@ -1,8 +1,12 @@
 import { REQUEST_STATE } from '../constant/constants';
 
 export const initialState = {
-  fetchState: REQUEST_STATE.INITIAL,
-  fightersList: [],
+  fightersList: [
+    { id: 1, name: '朝倉海', count: 0 },
+    { id: 2, name: '井上直樹', count: 0 },
+    { id: 3, name: '扇久保博正', count: 0 },
+    { id: 4, name: '瀧澤謙太', count: 0 },
+  ],
 };
 
 export const fightersActionTypes = {

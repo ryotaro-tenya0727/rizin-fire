@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :fighters, only: %i[index create]
       get  '/fighters', to: 'fighters#index'
+      get '/sort', to: 'fighters#sort'
       resources :restaurants do
         resources :foods, only: %i[index]
       end

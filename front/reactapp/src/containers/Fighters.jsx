@@ -1,23 +1,11 @@
-import React, { Fragment, useEffect, useReducer, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import { REQUEST_STATE } from '../constant/constants';
 
 import { ResultButton } from './../Button/ResultButton';
 import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
-//mui(icon以外)
-import Skeleton from '@mui/material/Skeleton';
-
 // reducers
-import {
-  initialState as fightersInitialState,
-  fightersActionTypes,
-  fightersReducer,
-} from '../reducers/fighters';
-
-//apis
-import { fetchfighters, postfighters } from '../apis/fighters';
+import { initialState as fightersInitialState } from '../reducers/fighters';
 
 //格闘家の一つ一つのカード
 import { FighterWrapper } from './../components/FighterWrapper';
@@ -65,30 +53,26 @@ const ItemWrapper = styled.div`
 const ResultWrapper = styled(HeaderAndResult)``;
 
 const Fighters = () => {
-  const [fightersState, dispatch] = useReducer(
-    fightersReducer,
-    fightersInitialState
-  );
+  const [fightersState, setFightersState] = useState(fightersInitialState);
   const [state, setState] = useState(initialState);
 
-  const voteFighter = (fighter) => {
-    postfighters({
-      fighter_number: fighter.fighter_number,
-    }).catch((e) => {
-      throw e;
+  const update = (index) => {
+    setFightersState({
+      fightersList: fightersState.fightersList.map((fighter, i) =>
+        i === index
+          ? { id: fighter.id, name: fighter.name, count: fighter.count + 1 }
+          : fighter
+      ),
     });
   };
-  useEffect(() => {
-    dispatch({ type: fightersActionTypes.FETCHING });
 
-    (async () => {
-      await fetchfighters().then((data) => {
-        dispatch({
-          type: fightersActionTypes.FETCH_SUCCESS,
-          payload: { fighters: data.fighters },
-        });
-      });
+  useEffect(() => {
+    (() => {
       //ここに処理
+      const rankings = fightersState.fightersList.sort(function (a, b) {
+        return a.count > b.count ? -1 : 1;
+      });
+      console.log(rankings);
     })();
   }, []);
 
@@ -102,38 +86,22 @@ const Fighters = () => {
       </HeaderWrapper>
       <FightersWrapper>
         <FightersList>
-          {fightersState.fetchState === REQUEST_STATE.LOADING ? (
-            <Fragment>
-              {[...Array(4).keys()].map((i) => (
-                <ItemWrapper key={i}>
-                  <Skeleton variant='text' height={25} />
-                  <Skeleton
-                    key={i}
-                    variant='rectangular'
-                    width={200}
-                    height={200}
-                  />
-                  <Skeleton variant='text' height={60} />
-                </ItemWrapper>
-              ))}
-            </Fragment>
-          ) : (
-            fightersState.fightersList.map((fighter, index) => (
-              <ItemWrapper key={fighter.id}>
-                <FighterWrapper
-                  fighter={fighter}
-                  onClickFighterWrapper={(fighter) => {
-                    setState({
-                      selectedFighter: fighter,
-                      isOpenOrderDialog: true,
-                    });
-                  }}
-                  onClickVote={(fighter) => voteFighter(fighter)}
-                  imageUrl={fightersImages[index]}
-                ></FighterWrapper>
-              </ItemWrapper>
-            ))
-          )}
+          {fightersState.fightersList.map((fighter, index) => (
+            <ItemWrapper key={index}>
+              <FighterWrapper
+                fighter={fighter}
+                //この下の関数の引数はなんでも良い。
+                onClickFighterWrapper={(fighter) => {
+                  setState({
+                    selectedFighter: fighter,
+                    isOpenOrderDialog: true,
+                  });
+                }}
+                onClickVote={() => update(index)}
+                imageUrl={fightersImages[index]}
+              ></FighterWrapper>
+            </ItemWrapper>
+          ))}
         </FightersList>
         {state.isOpenOrderDialog && (
           <FighterVoteDialog
@@ -150,6 +118,12 @@ const Fighters = () => {
       </FightersWrapper>
       <ResultWrapper>
         <p>現在の投票結果</p>
+        {fightersState.fightersList.map((fighter, index) => (
+          <div key={index}>
+            {fighter.name}
+            {fighter.count}
+          </div>
+        ))}
       </ResultWrapper>
     </Fragment>
   );
