@@ -67,6 +67,8 @@ const Fighters = () => {
     });
   };
 
+  const Rankings = fightersState.fightersList.slice();
+
   useEffect(() => {
     localStorage.setItem('Fighters', JSON.stringify(fightersState));
   }, [fightersState]);
@@ -84,7 +86,6 @@ const Fighters = () => {
               <FighterWrapper
                 fighter={fighter}
                 onClickVote={() => update(index)}
-                imageUrl={fightersImages[index]}
               ></FighterWrapper>
             </ItemWrapper>
           ))}
@@ -92,9 +93,12 @@ const Fighters = () => {
       </FightersWrapper>
       <ResultWrapper>
         <p>現在の投票結果</p>
-        {fightersState.fightersList.map((fighter, index) => (
+        {Rankings.sort(function (a, b) {
+          return a.count > b.count ? -1 : 1;
+        }).map((fighter, index) => (
           <div key={index}>
-            <Votes>{fighter.count}</Votes>
+            {fighter.name}
+            {fighter.count}
           </div>
         ))}
       </ResultWrapper>

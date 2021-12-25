@@ -18,7 +18,7 @@ const VotesWrapper = styled.div`
 `;
 
 const VotesString = styled.span`
-  font-size: 12px;
+  font-size: 24px;
   font-weight: bolder;
 `;
 
