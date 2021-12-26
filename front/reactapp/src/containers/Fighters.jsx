@@ -6,6 +6,8 @@ import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 //格闘家の一つ一つのカード
 import { FighterWrapper } from './../components/FighterWrapper';
 
+import { ResultButton } from '../Button/ResultButton';
+
 //styled-components
 const HeaderWrapper = styled(HeaderAndResult)``;
 
@@ -33,11 +35,16 @@ const ResultWrapper = styled.div`
   width: 270px;
   margin-left: auto;
   margin-right: auto;
-
+  margin-bottom: 40px;
   font-size: 20px;
   @media (max-width: 450px) {
     font-size: 15px;
   }
+`;
+
+const ResultButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const RankingsWrapper = styled.div`
@@ -45,6 +52,7 @@ const RankingsWrapper = styled.div`
   font-size: 24px;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const RankingsVotes = styled.div`
@@ -87,6 +95,13 @@ const Fighters = () => {
   const sortRankings = Rankings.sort(function (a, b) {
     return a.count > b.count ? -1 : 1;
   });
+
+  const moveResult = () => {
+    window.scrollTo({
+      top: 300,
+      behavior: 'smooth',
+    });
+  };
 
   const RankingModify = (
     fighter,
@@ -134,6 +149,10 @@ const Fighters = () => {
       <HeaderWrapper>
         RIZINバンタム級トーナメント<br></br>優勝予想グランプリ
       </HeaderWrapper>
+      <ResultButtonWrapper>
+        <ResultButton onClickScroll={moveResult}></ResultButton>
+      </ResultButtonWrapper>
+
       <FightersWrapper>
         <FightersList>
           {fightersState.fightersList.map((fighter, index) => (
@@ -147,7 +166,9 @@ const Fighters = () => {
         </FightersList>
       </FightersWrapper>
       <ResultWrapper>
-        <p style={{ textAlign: 'center' }}>現在の投票結果</p>
+        <p style={{ textAlign: 'center', fontWeight: 'bold' }}>
+          現在の投票結果
+        </p>
         {sortRankings.map((fighter, index) => (
           <RankingsWrapper key={index}>
             <RankingsVotes>

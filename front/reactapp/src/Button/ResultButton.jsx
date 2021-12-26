@@ -9,14 +9,15 @@ const theme = createTheme({
     },
   },
 });
-export const ResultButton = () => {
+export const ResultButton = ({ onClickScroll }) => {
   return (
     <ThemeProvider theme={theme}>
       <Button
         variant='contained'
         size='large'
         color='secondary'
-        sx={{ mb: 3, mt: 3 }}
+        sx={{ mt: 2 }}
+        onClick={() => onClickScroll()}
       >
         現在の投票結果を見る
       </Button>
