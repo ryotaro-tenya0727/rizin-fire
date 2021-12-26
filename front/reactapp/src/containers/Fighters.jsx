@@ -1,22 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { ResultButton } from './../Button/ResultButton';
 import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
 //格闘家の一つ一つのカード
 import { FighterWrapper } from './../components/FighterWrapper';
 
-//images
-import AsakuraImage from './../images/asakura.png';
-import InoueImage from '../images/inoue.png';
-import OgikuboImage from '../images/ogikubo.png';
-import TakizawaImage from '../images/takizawa.png';
-
 //style
-import { Votes } from './../components/FighterWrapper';
-
-const fightersImages = [AsakuraImage, InoueImage, OgikuboImage, TakizawaImage];
 
 //styled-components
 const HeaderWrapper = styled(HeaderAndResult)``;
@@ -31,7 +21,7 @@ const FightersList = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   width: 600px;
-  @media (max-width: 500px) {
+  @media (max-width: 530px) {
     justify-content: center;
   }
 `;
@@ -40,7 +30,31 @@ const ItemWrapper = styled.div`
   margin: 10px 30px 2px 30px;
 `;
 
-const ResultWrapper = styled(HeaderAndResult)``;
+const ResultWrapper = styled.div`
+  margin-top: 10px;
+  width: 270px;
+  margin-left: auto;
+  margin-right: auto;
+
+  font-size: 20px;
+  @media (max-width: 450px) {
+    font-size: 15px;
+  }
+`;
+
+const RankingsWrapper = styled.div`
+  font-weight: bolder;
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const RankingsVotes = styled.div`
+  font-size: 24px;
+  font-family: 'Prata', serif;
+
+  font-weight: bolder;
+`;
 
 const Fighters = () => {
   const localState = localStorage.getItem('Fighters');
@@ -69,6 +83,23 @@ const Fighters = () => {
 
   const Rankings = fightersState.fightersList.slice();
 
+  const sortRankings = Rankings.sort(function (a, b) {
+    return a.count > b.count ? -1 : 1;
+  });
+
+  const sameRankingModify = (fighter, n) => {
+    let result;
+    let sortRank = sortRankings[n];
+
+    if (fighter.count === sortRank.count) {
+      result = n + 1;
+    } else {
+      result = n + 2;
+    }
+
+    return result;
+  };
+
   useEffect(() => {
     localStorage.setItem('Fighters', JSON.stringify(fightersState));
   }, [fightersState]);
@@ -77,7 +108,6 @@ const Fighters = () => {
     <Fragment>
       <HeaderWrapper>
         RIZINバンタム級トーナメント<br></br>優勝予想グランプリ
-        <br></br> <ResultButton></ResultButton>
       </HeaderWrapper>
       <FightersWrapper>
         <FightersList>
@@ -92,14 +122,14 @@ const Fighters = () => {
         </FightersList>
       </FightersWrapper>
       <ResultWrapper>
-        <p>現在の投票結果</p>
-        {Rankings.sort(function (a, b) {
-          return a.count > b.count ? -1 : 1;
-        }).map((fighter, index) => (
-          <div key={index}>
-            {fighter.name}
-            {fighter.count}
-          </div>
+        <p style={{ textAlign: 'center' }}>現在の投票結果</p>
+        {sortRankings.map((fighter, index) => (
+          <RankingsWrapper key={index}>
+            <RankingsVotes>
+              {sameRankingModify(fighter, index)}位&emsp;{fighter.name}
+            </RankingsVotes>
+            <RankingsVotes>{fighter.count}票</RankingsVotes>
+          </RankingsWrapper>
         ))}
       </ResultWrapper>
     </Fragment>

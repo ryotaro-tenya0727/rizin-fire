@@ -22,7 +22,7 @@ const VotesString = styled.span`
   font-weight: bolder;
 `;
 
-export const Votes = styled.div`
+const Votes = styled.div`
   font-size: 24px;
   font-family: 'Prata', serif;
   text-align: center;
