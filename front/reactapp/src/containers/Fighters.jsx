@@ -6,8 +6,6 @@ import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 //格闘家の一つ一つのカード
 import { FighterWrapper } from './../components/FighterWrapper';
 
-//style
-
 //styled-components
 const HeaderWrapper = styled(HeaderAndResult)``;
 
@@ -80,6 +78,9 @@ const Fighters = () => {
       ),
     });
   };
+  let rankArrayNumber = -1;
+  let rankArrayPreviousNumber = -2;
+  let rankMostPreviousNumber = -3;
 
   const Rankings = fightersState.fightersList.slice();
 
@@ -87,14 +88,43 @@ const Fighters = () => {
     return a.count > b.count ? -1 : 1;
   });
 
-  const sameRankingModify = (fighter, n) => {
+  const RankingModify = (
+    fighter,
+    number,
+    previousNumber,
+    mostPreviousNumber
+  ) => {
     let result;
-    let sortRank = sortRankings[n];
+    let sortFighter = sortRankings[number] || fighter;
+    let sortPreviousFighter = sortRankings[previousNumber] || { count: null };
+    let mostPreviousFighter = sortRankings[mostPreviousNumber] || {
+      count: null,
+    };
 
-    if (fighter.count === sortRank.count) {
-      result = n + 1;
+    if (number === -1) {
+      result = number + 2;
+    } else if (
+      fighter.count === sortFighter.count &&
+      fighter.count === sortPreviousFighter.count &&
+      fighter.count === mostPreviousFighter.count
+    ) {
+      result = number - 1;
+    } else if (
+      fighter.count === sortFighter.count &&
+      fighter.count === sortPreviousFighter.count
+    ) {
+      result = number;
+    } else if (
+      sortFighter.count === sortPreviousFighter.count &&
+      fighter.count === sortFighter.count
+    ) {
+      result = number;
+    } else if (sortFighter.count === fighter.count) {
+      result = number + 1;
+    } else if (sortFighter.count === sortPreviousFighter.count) {
+      result = number + 2;
     } else {
-      result = n + 2;
+      result = number + 2;
     }
 
     return result;
@@ -126,7 +156,14 @@ const Fighters = () => {
         {sortRankings.map((fighter, index) => (
           <RankingsWrapper key={index}>
             <RankingsVotes>
-              {sameRankingModify(fighter, index)}位&emsp;{fighter.name}
+              {RankingModify(
+                fighter,
+                rankArrayNumber++,
+                rankArrayPreviousNumber++,
+                rankMostPreviousNumber++
+              )}
+              位&emsp;
+              {fighter.name}
             </RankingsVotes>
             <RankingsVotes>{fighter.count}票</RankingsVotes>
           </RankingsWrapper>
