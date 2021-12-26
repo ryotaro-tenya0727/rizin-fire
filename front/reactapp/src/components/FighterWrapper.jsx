@@ -64,7 +64,7 @@ export const FighterWrapper = ({ fighter, onClickVote }) => {
             content: 'RIZINバンタム級トーナメント優勝予想グランプリ',
           },
           { property: 'og:type', content: 'website' },
-          { property: 'og:url', content: 'https://tournament-fight.link' },
+          { property: 'og:url', content: 'https://mikotan.work' },
           { property: 'og:image', content: './../images/tournament.png' },
           {
             property: 'og:description',
@@ -72,7 +72,7 @@ export const FighterWrapper = ({ fighter, onClickVote }) => {
               '大晦日のバンタム級トーナメントの優勝者を予想して投票しよう！',
           },
         ]}
-      />
+      ></Helmet>
       <Name>{fighter.name}</Name>
       <VotesWrapper>
         <Votes>{fighter.count.toLocaleString()}</Votes>
@@ -98,7 +98,7 @@ export const FighterWrapper = ({ fighter, onClickVote }) => {
                 variant='contained'
                 color='secondary'
                 sx={{ width: '200px', mt: 1 }}
-                href={`https://twitter.com/intent/tweet?text=${fighter.name}が優勝！%0ahttps://tournament-fight.link%0a%23RIZIN%0a%23バンタム級トーナメント`}
+                href={`https://twitter.com/intent/tweet?text=${fighter.name}が優勝！%0ahttps://mikotan.work%0a%23RIZIN%0a%23バンタム級トーナメント`}
               >
                 <TwitterIcon sx={{ mr: 1.5, mb: 0.1 }} />
                 ツイートで広める
