@@ -114,11 +114,6 @@ const Fighters = () => {
       fighter.count === sortPreviousFighter.count
     ) {
       result = number;
-    } else if (
-      sortFighter.count === sortPreviousFighter.count &&
-      fighter.count === sortFighter.count
-    ) {
-      result = number;
     } else if (sortFighter.count === fighter.count) {
       result = number + 1;
     } else if (sortFighter.count === sortPreviousFighter.count) {
