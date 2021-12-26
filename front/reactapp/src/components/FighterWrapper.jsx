@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import { Helmet } from 'react-helmet';
 
 //styled-components
 
@@ -37,11 +39,40 @@ const theme = createTheme({
   },
 });
 
+const theme2 = createTheme({
+  palette: {
+    secondary: {
+      main: '#1D9BF0',
+    },
+  },
+});
+
 const ButtonWrapper = styled.div``;
 
+const TwitterWrapper = styled.div``;
 export const FighterWrapper = ({ fighter, onClickVote }) => {
   return (
     <Fragment>
+      <Helmet
+        title={'RIZINバンタム級トーナメント優勝予想グランプリ'}
+        meta={[
+          { name: 'twitter:card', content: 'summary' },
+          { name: 'twitter:site', content: '@naka_ryo_z' },
+          { name: 'twitter:creator', content: '@naka_ryo_z' },
+          {
+            property: 'og:title',
+            content: 'RIZINバンタム級トーナメント優勝予想グランプリ',
+          },
+          { property: 'og:type', content: 'website' },
+          { property: 'og:url', content: 'https://tournament-fight.link' },
+          { property: 'og:image', content: './../images/tournament.png' },
+          {
+            property: 'og:description',
+            content:
+              '大晦日のバンタム級トーナメントの優勝者を予想して投票しよう！',
+          },
+        ]}
+      />
       <Name>{fighter.name}</Name>
       <VotesWrapper>
         <Votes>{fighter.count.toLocaleString()}</Votes>
@@ -61,6 +92,19 @@ export const FighterWrapper = ({ fighter, onClickVote }) => {
           >
             {fighter.name}に投票する
           </Button>
+          <TwitterWrapper>
+            <ThemeProvider theme={theme2}>
+              <Button
+                variant='contained'
+                color='secondary'
+                sx={{ width: '200px', mt: 1 }}
+                href={`https://twitter.com/intent/tweet?text=${fighter.name}が優勝！%0ahttps://tournament-fight.link%0a%23RIZIN%0a%23バンタム級トーナメント`}
+              >
+                <TwitterIcon sx={{ mr: 1.5, mb: 0.1 }} />
+                ツイートで広める
+              </Button>
+            </ThemeProvider>
+          </TwitterWrapper>
         </ButtonWrapper>
       </ThemeProvider>
     </Fragment>
