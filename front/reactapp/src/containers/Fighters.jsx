@@ -63,17 +63,14 @@ const RankingsVotes = styled.div`
 `;
 
 const Fighters = () => {
-  const localState = localStorage.getItem('Fighters');
-  const fightersInitialState = localState
-    ? JSON.parse(localState)
-    : {
-        fightersList: [
-          { id: 1, name: '朝倉海', count: 0 },
-          { id: 2, name: '井上直樹', count: 0 },
-          { id: 3, name: '扇久保博正', count: 0 },
-          { id: 4, name: '瀧澤謙太', count: 0 },
-        ],
-      };
+  const fightersInitialState = {
+    fightersList: [
+      { id: 1, name: '朝倉海', count: 0 },
+      { id: 2, name: '井上直樹', count: 0 },
+      { id: 3, name: '扇久保博正', count: 0 },
+      { id: 4, name: '瀧澤謙太', count: 0 },
+    ],
+  };
 
   const [fightersState, setFightersState] = useState(fightersInitialState);
 
