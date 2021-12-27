@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useReducer } from 'react';
 import styled from 'styled-components';
 import useMedia from 'use-media';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
@@ -14,8 +15,22 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { listFighters } from './../queries';
 import { updateFighter } from './../mutations';
 
+//ローディング状態
+import {
+  loadingState,
+  fightersActionTypes,
+  fightersReducer,
+} from './../reducers/fighters';
+
+import { REQUEST_STATE } from './../constant/constants';
 //styled-components
 const HeaderWrapper = styled(HeaderAndResult)``;
+
+const CircularWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+`;
 
 const FightersWrapper = styled.div`
   display: flex;
@@ -72,7 +87,7 @@ const Fighters = () => {
   const fightersInitialState = {
     fightersList: [],
   };
-
+  const [state, dispatch] = useReducer(fightersReducer, loadingState);
   const [fightersState, setFightersState] = useState(fightersInitialState);
   const IsWide = useMedia({ minWidth: '530px' });
 
@@ -85,6 +100,9 @@ const Fighters = () => {
       }
     );
     setFightersState({ fightersList: sortAmplifyFighters });
+    dispatch({
+      type: fightersActionTypes.FETCH_SUCCESS,
+    });
   };
 
   const update = async (fighter) => {
@@ -152,6 +170,7 @@ const Fighters = () => {
   };
 
   useEffect(() => {
+    dispatch({ type: fightersActionTypes.FETCHING });
     fetchAmplify();
   }, []);
 
@@ -163,42 +182,51 @@ const Fighters = () => {
       <ResultButtonWrapper>
         <ResultButton onClickScroll={moveResult}></ResultButton>
       </ResultButtonWrapper>
-
-      <FightersWrapper>
-        <FightersList>
-          {fightersState.fightersList.map((fighter, index) => (
-            <ItemWrapper key={index}>
-              <FighterWrapper
-                fighter={fighter}
-                onClickVote={() => update(fighter)}
-                fetchdata={() => {
-                  fetchAmplify();
-                }}
-              ></FighterWrapper>
-            </ItemWrapper>
-          ))}
-        </FightersList>
-      </FightersWrapper>
-      <ResultWrapper>
-        <p style={{ textAlign: 'center', fontWeight: 'bold' }}>
-          現在の投票結果
-        </p>
-        {sortRankings.map((fighter, index) => (
-          <RankingsWrapper key={index}>
-            <RankingsVotes>
-              {RankingModify(
-                fighter,
-                rankArrayNumber++,
-                rankArrayPreviousNumber++,
-                rankMostPreviousNumber++
-              )}
-              位&emsp;
-              {fighter.name}
-            </RankingsVotes>
-            <RankingsVotes>{fighter.count}票</RankingsVotes>
-          </RankingsWrapper>
-        ))}
-      </ResultWrapper>
+      {state.fetchState === REQUEST_STATE.LOADING ? (
+        <Fragment>
+          <CircularWrapper>
+            <CircularProgress />
+          </CircularWrapper>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <FightersWrapper>
+            <FightersList>
+              {fightersState.fightersList.map((fighter, index) => (
+                <ItemWrapper key={index}>
+                  <FighterWrapper
+                    fighter={fighter}
+                    onClickVote={() => update(fighter)}
+                    fetchdata={() => {
+                      fetchAmplify();
+                    }}
+                  ></FighterWrapper>
+                </ItemWrapper>
+              ))}
+            </FightersList>
+          </FightersWrapper>
+          <ResultWrapper>
+            <p style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              現在の投票結果
+            </p>
+            {sortRankings.map((fighter, index) => (
+              <RankingsWrapper key={index}>
+                <RankingsVotes>
+                  {RankingModify(
+                    fighter,
+                    rankArrayNumber++,
+                    rankArrayPreviousNumber++,
+                    rankMostPreviousNumber++
+                  )}
+                  位&emsp;
+                  {fighter.name}
+                </RankingsVotes>
+                <RankingsVotes>{fighter.count}票</RankingsVotes>
+              </RankingsWrapper>
+            ))}
+          </ResultWrapper>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
