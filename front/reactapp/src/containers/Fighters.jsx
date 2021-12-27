@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useMedia from 'use-media';
 
 import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
@@ -77,6 +78,7 @@ const Fighters = () => {
   };
 
   const [fightersState, setFightersState] = useState(fightersInitialState);
+  const IsWide = useMedia({ minWidth: '530px' });
 
   const update = (index) => {
     setFightersState({
@@ -85,6 +87,13 @@ const Fighters = () => {
           ? { id: fighter.id, name: fighter.name, count: fighter.count + 1 }
           : fighter
       ),
+    });
+  };
+
+  const moveResult = () => {
+    window.scrollTo({
+      top: IsWide ? 300 : 700,
+      behavior: 'smooth',
     });
   };
   let rankArrayNumber = -1;
@@ -96,13 +105,6 @@ const Fighters = () => {
   const sortRankings = Rankings.sort(function(a, b) {
     return a.count > b.count ? -1 : 1;
   });
-
-  const moveResult = () => {
-    window.scrollTo({
-      top: 300,
-      behavior: 'smooth',
-    });
-  };
 
   const RankingModify = (
     fighter,
