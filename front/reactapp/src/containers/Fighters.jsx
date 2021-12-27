@@ -12,6 +12,7 @@ import { ResultButton } from '../Button/ResultButton';
 //amplifyを用いたデータ取得
 import { API, graphqlOperation } from 'aws-amplify';
 import { listFighters } from './../queries';
+import { updateFighter } from './../mutations';
 
 //styled-components
 const HeaderWrapper = styled(HeaderAndResult)``;
@@ -69,25 +70,32 @@ const RankingsVotes = styled.div`
 
 const Fighters = () => {
   const fightersInitialState = {
-    fightersList: [
-      { id: 1, name: '朝倉海', count: 0 },
-      { id: 2, name: '井上直樹', count: 0 },
-      { id: 3, name: '扇久保博正', count: 0 },
-      { id: 4, name: '瀧澤謙太', count: 0 },
-    ],
+    fightersList: [],
   };
 
   const [fightersState, setFightersState] = useState(fightersInitialState);
   const IsWide = useMedia({ minWidth: '530px' });
 
-  const update = (index) => {
-    setFightersState({
-      fightersList: fightersState.fightersList.map((fighter, i) =>
-        i === index
-          ? { id: fighter.id, name: fighter.name, count: fighter.count + 1 }
-          : fighter
-      ),
-    });
+  const fetchAmplify = async () => {
+    const AmplifyFighters = await API.graphql(graphqlOperation(listFighters));
+
+    const sortAmplifyFighters = AmplifyFighters.data.listFighters.items.sort(
+      function(a, b) {
+        return a.id < b.id ? -1 : 1;
+      }
+    );
+    setFightersState({ fightersList: sortAmplifyFighters });
+  };
+
+  const update = async (fighter) => {
+    await API.graphql(
+      graphqlOperation(updateFighter, {
+        input: {
+          id: fighter.id,
+          count: fighter.count + 1,
+        },
+      })
+    );
   };
 
   const moveResult = () => {
@@ -144,11 +152,8 @@ const Fighters = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      const fighters = await API.graphql(graphqlOperation(listFighters));
-      console.log(fighters.data.listFighters.items);
-    })();
-  }, [fightersState]);
+    fetchAmplify();
+  }, []);
 
   return (
     <Fragment>
@@ -165,7 +170,10 @@ const Fighters = () => {
             <ItemWrapper key={index}>
               <FighterWrapper
                 fighter={fighter}
-                onClickVote={() => update(index)}
+                onClickVote={() => update(fighter)}
+                fetchdata={() => {
+                  fetchAmplify();
+                }}
               ></FighterWrapper>
             </ItemWrapper>
           ))}

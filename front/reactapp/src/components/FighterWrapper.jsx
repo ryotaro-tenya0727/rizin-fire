@@ -50,7 +50,7 @@ const theme2 = createTheme({
 const ButtonWrapper = styled.div``;
 
 const TwitterWrapper = styled.div``;
-export const FighterWrapper = ({ fighter, onClickVote }) => {
+export const FighterWrapper = ({ fighter, onClickVote, fetchdata }) => {
   return (
     <Fragment>
       <Helmet
@@ -86,8 +86,9 @@ export const FighterWrapper = ({ fighter, onClickVote }) => {
             size='large'
             color='secondary'
             sx={{ width: '200px', mt: 1 }}
-            onClick={() => {
-              onClickVote();
+            onClick={async () => {
+              await onClickVote();
+              fetchdata();
             }}
           >
             {fighter.name}に投票する
@@ -99,6 +100,7 @@ export const FighterWrapper = ({ fighter, onClickVote }) => {
                 color='secondary'
                 sx={{ width: '200px', mt: 1 }}
                 href={`https://twitter.com/intent/tweet?text=${fighter.name}が優勝！%0ahttps://mikotan.work%0a%23RIZIN%0a%23バンタム級トーナメント`}
+                target='_blank'
               >
                 <TwitterIcon sx={{ mr: 1.5, mb: 0.1 }} />
                 ツイートで広める

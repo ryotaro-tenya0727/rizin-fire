@@ -4,9 +4,9 @@
 export const onCreateFighter = /* GraphQL */ `
   subscription OnCreateFighter {
     onCreateFighter {
+      id
       name
       count
-      id
       createdAt
       updatedAt
     }
@@ -15,9 +15,9 @@ export const onCreateFighter = /* GraphQL */ `
 export const onUpdateFighter = /* GraphQL */ `
   subscription OnUpdateFighter {
     onUpdateFighter {
+      id
       name
       count
-      id
       createdAt
       updatedAt
     }
@@ -26,9 +26,9 @@ export const onUpdateFighter = /* GraphQL */ `
 export const onDeleteFighter = /* GraphQL */ `
   subscription OnDeleteFighter {
     onDeleteFighter {
+      id
       name
       count
-      id
       createdAt
       updatedAt
     }

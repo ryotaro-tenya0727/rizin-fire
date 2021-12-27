@@ -7,9 +7,9 @@ export const createFighter = /* GraphQL */ `
     $condition: ModelFighterConditionInput
   ) {
     createFighter(input: $input, condition: $condition) {
+      id
       name
       count
-      id
       createdAt
       updatedAt
     }
@@ -21,9 +21,9 @@ export const updateFighter = /* GraphQL */ `
     $condition: ModelFighterConditionInput
   ) {
     updateFighter(input: $input, condition: $condition) {
+      id
       name
       count
-      id
       createdAt
       updatedAt
     }
@@ -35,9 +35,9 @@ export const deleteFighter = /* GraphQL */ `
     $condition: ModelFighterConditionInput
   ) {
     deleteFighter(input: $input, condition: $condition) {
+      id
       name
       count
-      id
       createdAt
       updatedAt
     }
