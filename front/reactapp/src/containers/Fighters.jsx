@@ -8,6 +8,10 @@ import { FighterWrapper } from './../components/FighterWrapper';
 
 import { ResultButton } from '../Button/ResultButton';
 
+//amplifyを用いたデータ取得
+import { API, graphqlOperation } from 'aws-amplify';
+import { listFighters } from './../queries';
+
 //styled-components
 const HeaderWrapper = styled(HeaderAndResult)``;
 
@@ -89,7 +93,7 @@ const Fighters = () => {
 
   const Rankings = fightersState.fightersList.slice();
 
-  const sortRankings = Rankings.sort(function (a, b) {
+  const sortRankings = Rankings.sort(function(a, b) {
     return a.count > b.count ? -1 : 1;
   });
 
@@ -138,7 +142,10 @@ const Fighters = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('Fighters', JSON.stringify(fightersState));
+    (async () => {
+      const fighters = await API.graphql(graphqlOperation(listFighters));
+      console.log(fighters.data.listFighters.items);
+    })();
   }, [fightersState]);
 
   return (

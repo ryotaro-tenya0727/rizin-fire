@@ -1,0 +1,12 @@
+projects:
+  bantom:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - fighter
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: .

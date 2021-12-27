@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bantom-dev-31805-authRole",
+      "UnauthRoleArn": "arn:aws:iam::636031188439:role/amplify-bantom-dev-31805-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::636031188439:role/amplify-bantom-dev-31805-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-bantom-dev-31805-deployment",
+      "UnauthRoleName": "amplify-bantom-dev-31805-unauthRole",
+      "StackName": "amplify-bantom-dev-31805",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:636031188439:stack/amplify-bantom-dev-31805/2d952320-6678-11ec-bd73-0eb96f3c0bf5",
+      "AmplifyAppId": "d2zooydtbl79td"
+    }
+  }
+}
