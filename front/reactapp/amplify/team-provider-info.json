@@ -10,6 +10,11 @@
       "StackName": "amplify-bantom-dev-31805",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:636031188439:stack/amplify-bantom-dev-31805/2d952320-6678-11ec-bd73-0eb96f3c0bf5",
       "AmplifyAppId": "d2zooydtbl79td"
+    },
+    "categories": {
+      "auth": {
+        "bantom8345bdb8": {}
+      }
     }
   }
 }

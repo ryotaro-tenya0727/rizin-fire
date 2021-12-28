@@ -9,6 +9,7 @@ export const getFighter = /* GraphQL */ `
       count
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -33,6 +34,7 @@ export const listFighters = /* GraphQL */ `
         count
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
