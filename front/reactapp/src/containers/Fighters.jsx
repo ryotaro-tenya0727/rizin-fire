@@ -16,7 +16,7 @@ import { listFighters } from './../queries';
 import { updateFighter } from './../mutations';
 import { onUpdateFighter } from './../subscriptions';
 
-//ローディングの状態
+//ローディング
 import {
   loadingState,
   fightersActionTypes,
