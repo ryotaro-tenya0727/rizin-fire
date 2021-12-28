@@ -14,6 +14,7 @@ import { ResultButton } from '../Button/ResultButton';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listFighters } from './../queries';
 import { updateFighter } from './../mutations';
+import { onUpdateFighter } from './../subscriptions';
 
 //ローディング状態
 import {
@@ -88,17 +89,14 @@ const Fighters = () => {
     fightersList: [],
   };
   const [state, dispatch] = useReducer(fightersReducer, loadingState);
+
   const [fightersState, setFightersState] = useState(fightersInitialState);
   const IsWide = useMedia({ minWidth: '530px' });
 
   const fetchAmplify = async () => {
     const AmplifyFighters = await API.graphql(graphqlOperation(listFighters));
 
-    const sortAmplifyFighters = AmplifyFighters.data.listFighters.items.sort(
-      function(a, b) {
-        return a.id < b.id ? -1 : 1;
-      }
-    );
+    const sortAmplifyFighters = AmplifyFighters.data.listFighters.items;
     setFightersState({ fightersList: sortAmplifyFighters });
     dispatch({
       type: fightersActionTypes.FETCH_SUCCESS,
@@ -171,17 +169,22 @@ const Fighters = () => {
 
   useEffect(() => {
     dispatch({ type: fightersActionTypes.FETCHING });
+
     fetchAmplify();
+    API.graphql(graphqlOperation(onUpdateFighter)).subscribe({
+      next: async () => {
+        const AmplifyFighters = await API.graphql(
+          graphqlOperation(listFighters)
+        );
+
+        const sortAmplifyFighters = AmplifyFighters.data.listFighters.items;
+        setFightersState({ fightersList: sortAmplifyFighters });
+      },
+    });
   }, []);
 
   return (
     <Fragment>
-      <HeaderWrapper>
-        RIZINバンタム級トーナメント<br></br>優勝予想グランプリ
-      </HeaderWrapper>
-      <ResultButtonWrapper>
-        <ResultButton onClickScroll={moveResult}></ResultButton>
-      </ResultButtonWrapper>
       {state.fetchState === REQUEST_STATE.LOADING ? (
         <Fragment>
           <CircularWrapper>
@@ -190,6 +193,12 @@ const Fighters = () => {
         </Fragment>
       ) : (
         <Fragment>
+          <HeaderWrapper>
+            RIZINバンタム級トーナメント<br></br>優勝予想グランプリ
+          </HeaderWrapper>
+          <ResultButtonWrapper>
+            <ResultButton onClickScroll={moveResult}></ResultButton>
+          </ResultButtonWrapper>
           <FightersWrapper>
             <FightersList>
               {fightersState.fightersList.map((fighter, index) => (
