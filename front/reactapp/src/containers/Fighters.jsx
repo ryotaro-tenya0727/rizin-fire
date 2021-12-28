@@ -187,7 +187,7 @@ const Fighters = () => {
   return (
     <Fragment>
       <Helmet
-        title='Home'
+        title='RIZINバンタム級トーナメント優勝予想グランプリ'
         meta={[
           { name: 'twitter:card', content: 'summary' },
           {
