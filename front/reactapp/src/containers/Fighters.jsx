@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
-//ファイター
+//ファイター一覧
 import { FighterWrapper } from './../components/FighterWrapper';
 
 import { ResultButton } from '../Button/ResultButton';
