@@ -78,7 +78,7 @@ export const FighterWrapper = ({ fighter, onClickVote, fetchdata }) => {
                 variant='contained'
                 color='secondary'
                 sx={{ width: '200px', mt: 1 }}
-                href={`https://twitter.com/intent/tweet?text=${fighter.name}が優勝！%0ahttps://sub.d2zooydtbl79td.amplifyapp.com%0a%23RIZIN%0a%23バンタム級トーナメント`}
+                href={`https://twitter.com/intent/tweet?text=${fighter.name}が優勝！%0ahttps://sub.d2zooydtbl79td.amplifyapp.com/%0a%23RIZIN%0a%23バンタム級トーナメント`}
                 target='_blank'
               >
                 <TwitterIcon sx={{ mr: 1.5, mb: 0.1 }} />
