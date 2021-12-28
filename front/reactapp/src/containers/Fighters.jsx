@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState, useReducer } from 'react';
 import styled from 'styled-components';
 import useMedia from 'use-media';
 import CircularProgress from '@mui/material/CircularProgress';
-import { Helmet } from 'react-helmet';
 
 import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
