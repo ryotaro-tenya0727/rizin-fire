@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState, useReducer } from 'react';
 import styled from 'styled-components';
 import useMedia from 'use-media';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Helmet } from 'react-helmet';
 
 import { HeaderAndResult } from '../styledcomponent/HeaderAndResult';
 
@@ -185,6 +186,32 @@ const Fighters = () => {
 
   return (
     <Fragment>
+      <Helmet
+        title='Home'
+        meta={[
+          { name: 'twitter:card', content: 'summary' },
+          {
+            name: 'twitter:title',
+            content: 'RIZINバンタム級トーナメント優勝予想グランプリ',
+          },
+          { name: 'twitter:description', content: 'description of Home' },
+          { name: 'twitter:image', content: './../images/tournament.png' },
+          {
+            property: 'og:title',
+            content: 'RIZINバンタム級トーナメント優勝予想グランプリ',
+          },
+          { property: 'og:type', content: 'website' },
+          {
+            property: 'og:url',
+            content: 'https://sub.d2zooydtbl79td.amplifyapp.com',
+          },
+          { property: 'og:image', content: './../images/tournament.png' },
+          {
+            property: 'og:description',
+            content: 'RIZINバンタム級トーナメントの優勝者を予想しよう！',
+          },
+        ]}
+      />
       {state.fetchState === REQUEST_STATE.LOADING ? (
         <Fragment>
           <CircularWrapper>
