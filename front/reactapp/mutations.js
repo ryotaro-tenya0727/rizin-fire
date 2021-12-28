@@ -12,7 +12,6 @@ export const createFighter = /* GraphQL */ `
       count
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -27,7 +26,6 @@ export const updateFighter = /* GraphQL */ `
       count
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -42,7 +40,6 @@ export const deleteFighter = /* GraphQL */ `
       count
       createdAt
       updatedAt
-      owner
     }
   }
 `;

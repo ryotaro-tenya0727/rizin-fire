@@ -64,7 +64,10 @@ export const FighterWrapper = ({ fighter, onClickVote, fetchdata }) => {
             content: 'RIZINバンタム級トーナメント優勝予想グランプリ',
           },
           { property: 'og:type', content: 'website' },
-          { property: 'og:url', content: 'https://mikotan.work' },
+          {
+            property: 'og:url',
+            content: 'https://sub.d2zooydtbl79td.amplifyapp.com/',
+          },
           { property: 'og:image', content: './../images/tournament.png' },
           {
             property: 'og:description',
