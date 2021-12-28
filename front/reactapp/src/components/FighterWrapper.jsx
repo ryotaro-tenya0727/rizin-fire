@@ -53,29 +53,37 @@ const TwitterWrapper = styled.div``;
 export const FighterWrapper = ({ fighter, onClickVote, fetchdata }) => {
   return (
     <Fragment>
-      <Helmet
-        title={'RIZINバンタム級トーナメント優勝予想グランプリ'}
-        meta={[
-          { name: 'twitter:card', content: 'summary' },
-          { name: 'twitter:site', content: '@naka_ryo_z' },
-          { name: 'twitter:creator', content: '@naka_ryo_z' },
-          {
-            property: 'og:title',
-            content: 'RIZINバンタム級トーナメント優勝予想グランプリ',
-          },
-          { property: 'og:type', content: 'website' },
-          {
-            property: 'og:url',
-            content: 'https://sub.d2zooydtbl79td.amplifyapp.com/',
-          },
-          { property: 'og:image', content: './../images/tournament.png' },
-          {
-            property: 'og:description',
-            content:
-              '大晦日のバンタム級トーナメントの優勝者を予想して投票しよう！',
-          },
-        ]}
-      ></Helmet>
+      <Helmet>
+        <title>{'RIZINバンタム級トーナメント優勝予想グランプリ'}</title>
+        <meta
+          name='description'
+          content='大晦日のバンタム級トーナメントの優勝者を予想して投票しよう！'
+        />
+        <meta
+          name='viewport'
+          content='width=device-width,initial-scale=1.0,minimum-scale=1.0'
+        ></meta>
+
+        <head prefix='og: http://ogp.me/ns#' />
+        <meta
+          property='og:url'
+          content='https://sub.d2zooydtbl79td.amplifyapp.com/'
+        />
+        <meta property='og:type' content='website' />
+        <meta
+          property='og:title'
+          content='RIZINバンタム級トーナメント優勝予想グランプリ'
+        />
+        <meta
+          property='og:description'
+          content='大晦日のバンタム級トーナメントの優勝者を予想して投票しよう！'
+        />
+        <meta
+          property='og:site_name'
+          content='RIZINバンタム級トーナメント優勝予想グランプリ'
+        />
+        <meta property='og:image' content='./../images/tournament.png' />
+      </Helmet>
       <Name>{fighter.name}</Name>
       <VotesWrapper>
         <Votes>{fighter.count.toLocaleString()}</Votes>
