@@ -1,5 +1,5 @@
 import { REQUEST_STATE } from '../constant/constants';
-
+//
 export const initialState = {
   fetchState: REQUEST_STATE.INITIAL,
   restaurantsList: [],
