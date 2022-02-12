@@ -7,6 +7,7 @@ const Orders = () => {
       注文画面
       <div>aaa</div>
       <div>aaa</div>
+      <div>Add</div>
     </Fragment>
   );
 };
